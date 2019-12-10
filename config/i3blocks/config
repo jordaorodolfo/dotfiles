@@ -1,0 +1,80 @@
+# [Weather]
+# command=~/.config/i3/scripts/weather3.sh "stockholm"
+# interval=1800
+# color=#c9c9ff
+# #border=#535353
+
+# [audio]
+# label=
+# interval=once
+# command=~/.config/i3/scripts/audio1.sh
+# color=#f19950
+
+[xbkmap]
+label=XBK MAP
+separator=true
+interval=60
+command=~/.config/i3blocks/scripts/xbkmap
+
+[screentemp]
+label=SCREEN TEMP
+separator=true
+interval=60
+command=~/.config/i3blocks/scripts/redshift
+
+[memory]
+label=MEM
+separator=true
+interval=5
+command=/usr/share/i3blocks/memory
+separator=true
+color=#dfe3ee
+
+[disk]
+label=DISK
+command=/usr/share/i3blocks/disk
+interval=30
+separator=true
+
+[cpu]
+label=CPU
+command=/usr/share/i3blocks/cpu_usage
+interval=5
+#min_width=CPU:100.00%
+separator=true
+color=#00ff7f
+
+[temperature]
+#label=TEMP
+# label=
+interval=15
+command=/usr/share/i3blocks/temperature
+#color=#8caba8
+color=#dcedc1
+separator=true
+
+[temperature]
+label=BAT
+interval=30
+command=/usr/share/i3blocks/battery
+color=#dcedc1
+separator=true
+
+[iface]
+# label=
+instance=wlo1
+color=#00FFFF
+interval=10
+separator=true
+color=#adff00
+
+[bandwidth]
+# label=
+instance=wlo1
+interval=1
+color=#83d0c9
+
+# Update time every 5 seconds
+[time]
+command=date "+%Y-%m-%d %T"
+interval=10

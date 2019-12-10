@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ -x "$(command -v redshift)" ]; then
+	case $BLOCK_BUTTON in
+		1) redshift -l geoclue2 -m randr -O 3500 && systemctl --user restart redshift;;
+		3) systemctl --user stop redshift && redshift -l geoclue2 -m randr -O 2500;;
+	esac
+	SCREEN_TEMP=$(redshift -l geoclue2 -p | grep temperature | cut -f2 -d:)
+	echo $SCREEN_TEMP
+else
+	echo "NO REDSHIFT"
+fi
