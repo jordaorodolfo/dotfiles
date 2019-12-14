@@ -182,6 +182,8 @@
   :mode ("\\.tex\\'" . LaTeX-mode)
   :config
   (add-to-list 'TeX-command-list '("Make" "make" TeX-run-command nil t)))
+  (reftex-mode 1)
+  (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
     #+END_SRC
 
     #+RESULTS:
