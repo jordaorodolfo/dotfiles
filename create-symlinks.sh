@@ -11,5 +11,5 @@ ln -s $SCRIPT_DIR/emacs $HOME/.emacs.d
 
 # create symlinks for hidden stuff in home folder
 for f in $SCRIPT_DIR/home/hidden/* ; do
-  ln -s $(basename $SCRIPT_DIR/home/hidden/$f) ~/.$(basename $f)
+  ln -s $f ~/.$(basename $f)
 done
