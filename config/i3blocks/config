@@ -10,6 +10,12 @@
 # command=~/.config/i3/scripts/audio1.sh
 # color=#f19950
 
+[touchpad]
+label=TOUCHPAD
+separator=true
+interval=10
+command=synclient -l | grep 'TouchpadOff' | awk -F= '{print $2}'
+
 [xbkmap]
 label=XBK MAP
 separator=true

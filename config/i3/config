@@ -214,6 +214,9 @@ bar {
 	}
 }
 
+# Touchpad toggle On/Off on mod+m
+bindsym $mod+m exec synclient TouchpadOff=$(( $(synclient -l | grep 'TouchpadOff' | awk -F= '{print $2}') ^1 ))
+
 # Start default programs
 exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon

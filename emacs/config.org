@@ -201,6 +201,13 @@
   (setq org-latex-pdf-process '("latexmk -pdf %f")))
     #+END_SRC
 
+    Set up reveal support
+
+    #+BEGIN_SRC emacs-lisp
+(use-package ox-reveal
+  :ensure t
+  :after (org))
+    #+END_SRC
     #+RESULTS:
     : t
 
