@@ -1,0 +1,84 @@
+function source_if_possible() {
+    if [[ -r $1 ]]; then
+        source $1
+    fi
+}
+
+export PATH="$PATH:/home/$USER/Apps/altera/13.0sp1/quartus/bin"
+export PATH="$PATH:/home/$USER/gurobi810/linux64/bin"
+export GUROBI_HOME="/home/$USER/gurobi810/linux64"
+
+function gac() {
+    git add -u
+    git commit -a -m "$1"
+}
+
+function gacp() {
+    gac $1
+    git push
+}
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+
+if [ -d "$HOME/.local/include" ] ; then
+    export LD_INCLUDE_PATH="$HOME/.local/include:$LD_INCLUDE_PATH"
+    export C_INCLUDE_PATH="$HOME/.local/include:$C_INCLUDE_PATH"
+    export CPLUS_INCLUDE_PATH="$HOME/.local/include:$CPLUS_INCLUDE_PATH"
+fi
+
+if [ -d "$HOME/.local/lib" ] ; then
+    export LD_LIBRARY_PATH="$HOME/.local/lib:$LD_LIBRARY_PATH"
+    export LIBRARY_PATH="$HOME/.local/lib:$LIBRARY_PATH"
+fi
+
+# snap
+mkdir -p ~/.local/share/applications
+if [ -f /var/lib/snapd/desktop/applications ]; then
+  for i in /var/lib/snapd/desktop/applications/*.desktop; do
+    if [ ! -f ~/.local/share/applications/${i##*/} ]; then
+      ln -s /var/lib/snapd/desktop/applications/${i##*/} ~/.local/share/applications/${i##*/};
+    fi;
+  done
+fi;
+
+# get also the cargo env
+if [ -f $HOME/.cargo/env ]; then
+  source $HOME/.cargo/env
+fi;
+
+# get flatpak if present
+if [ -f /var/lib/flatpak/exports/bin ]; then
+  export PATH=$PATH:/var/lib/flatpak/exports/bin
+fi;
+
+# flatk pak
+mkdir -p ~/.local/share/applications
+if [ -f /var/lib/flatpak/exports/share/applications ]; then
+  for i in /var/lib/flatpak/exports/share/applications/*.desktop; do
+    if [ ! -f ~/.local/share/applications/${i##*/} ]; then
+      ln -s /var/lib/flatpak/exports/share/applications/${i##*/} ~/.local/share/applications/${i##*/};
+    fi;
+  done
+fi;
+
+# snap stuff
+if [ -f "/snap/bin" ] ; then
+  export PATH="$PATH:/snap/bin"
+fi;
+
+alias emacsg="emacsclient -nc -a emacs"
+alias emacst="emacsclient -t -a emacs"
+alias emacsk="emacsclient -e '(kill-emacs)'"
+
+# nix stuff
+source /etc/profile.d/nix.sh
+export PATH="$PATH:$HOME/.nix-profile/bin"
