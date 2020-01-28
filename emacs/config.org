@@ -181,9 +181,10 @@
   :ensure t
   :mode ("\\.tex\\'" . LaTeX-mode)
   :config
-  (add-to-list 'TeX-command-list '("Make" "make" TeX-run-command nil t)))
-  (reftex-mode 1)
-  (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+  (add-to-list 'TeX-command-list '(("Make" "make" TeX-run-command nil t)
+                                   ("Tectonic" "tectonic" TeX-run-command nil t)))
+  (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource")))
     #+END_SRC
 
     #+RESULTS:
