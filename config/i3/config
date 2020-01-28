@@ -198,6 +198,7 @@ bindsym $mod+Pause mode "$mode_system"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+  tray_output primary
 	status_command i3blocks
 
 	colors {
