@@ -80,5 +80,7 @@ alias emacst="emacsclient -t -a emacs"
 alias emacsk="emacsclient -e '(kill-emacs)'"
 
 # nix stuff
-source /etc/profile.d/nix.sh
-export PATH="$PATH:$HOME/.nix-profile/bin"
+if [ -f "/etc/profile.d/nix.sh" ] ; then
+  source /etc/profile.d/nix.sh
+  export PATH="$PATH:$HOME/.nix-profile/bin"
+fi;
