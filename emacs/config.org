@@ -177,14 +177,23 @@
 *** LaTeX (AucTeX)
 
     #+BEGIN_SRC emacs-lisp
-(use-package auctex
-  :ensure t
-  :mode ("\\.tex\\'" . LaTeX-mode)
-  :config
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-  (add-to-list 'TeX-command-list '(("Make" "make" TeX-run-command nil t)
-                                   ("Tectonic" "tectonic" TeX-run-command nil t)))
-  (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource")))
+(use-package tex-site
+  :ensure auctex
+  :config 
+    ;; some-config-here
+  (use-package latex
+    :config 
+    ;; stuff defined in latex.el config'ed here
+    (add-to-list 'TeX-command-list '("Tectonic" "tectonic %s" TeX-run-command nil t))
+    (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
+    (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+				   
+  ))
+;;(use-package auctex
+;;  :ensure t
+;;  :mode ("\\.tex\\'" . LaTeX-mode)
+;;  :config
+;;  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
     #+END_SRC
 
     #+RESULTS:
