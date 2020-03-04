@@ -233,11 +233,21 @@
     #+END_SRC
 
     #+RESULTS:
+
+    Set up auto revert for org file
+
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :ensure t
+  :hook (org-mode . auto-revert-mode))
+#+END_SRC
     
     And also the nice agenda features.
 
     #+BEGIN_SRC emacs-lisp
 (setq org-agenda-files (list 
+                        "~/Orgs/work-list.org"
+                        "~/Orgs/individual.org"
 			"~/gits/correct-project/org/correct.org"
 			"~/gits/panorama-kth/org/panorama.org"
 			"~/gits/phd-rodolfo-jordao/progress/progress.org"
@@ -297,8 +307,18 @@
 | n | Agenda and all TODOs   | ((agenda ) (alltodo )) |                                        |                                                                  |
 
 *** Haskell
+
+#+BEGIN_SRC emacs-lisp
+(use-package haskell-mode
+:ensure t
+:mode "\\.hs\\'")
+#+END_SRC
     
     #+BEGIN_SRC emacs-lisp
+(use-package lsp-haskell
+  :after (haskell-mode lsp-mode)
+  :hook haskell-mode
+)
     #+END_SRC
 
     #+RESULTS:
