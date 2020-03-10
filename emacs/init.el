@@ -24,6 +24,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   (quote
+    ("~/Orgs/work-list.org" "~/Orgs/individual.org" "~/gits/phd-rodolfo-jordao/progress/progress.org" "~/gits/forsyde-group/org/forsyde-kth.org")))
  '(package-selected-packages
    (quote
     (ox-reveal yasnippet use-package projectile org-ref minizinc-mode magit lsp-mode god-mode flycheck counsel auctex))))

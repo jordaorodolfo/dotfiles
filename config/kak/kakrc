@@ -1,21 +1,7 @@
 colorscheme zenburn
-set global tabstop 2
-set global indentwidth 2
+set global tabstop 4
+set global indentwidth 4
 set global autoreload yes
-
-hook global WinSetOption filetype=(c|cpp) %{
-  clang-enable-autocomplete
-  clang-enable-autoinfo
-  clang-enable-diagnosts
-}
-
-hook global NormalIdle filetype=(c|cpp) %{
-	clang-parse
-}
-
-hook global WinSetOption filetype=(python) %{
-  jedi-enable-autocomplete
-}
 
 hook global WinCreate .* %{addhl window/ number-lines}
 
@@ -23,6 +9,22 @@ hook global InsertChar j %{ try %{
     exec -draft hH <a-k>kj<ret> d
     exec <esc>
 }}
+ 
+# hook global WinSetOption filetype=(c|cpp) %{
+#   clang-enable-autocomplete
+#   clang-enable-autoinfo
+#   clang-enable-diagnosts
+# }
+
+# hook global NormalIdle filetype=(c|cpp) %{
+#     clang-parse
+# }
+
+# hook global WinSetOption filetype=(python) %{
+#   jedi-enable-autocomplete
+# }
+
+
 
 # hook global InsertCompletionShow .* %{ map window insert <tab> <c-n>; map window insert <backtab> <c-p> }
 # hook global InsertCompletionHide .* %{ unmap window insert <tab> <c-n>; unmap window insert <backtab> <c-p> }
@@ -31,65 +33,69 @@ def find -params 1 -shell-script-completion %{ find -type f } %{ edit %arg{1} }
 
 def git-edit -params 1 -shell-script-completion %{ git ls-files } %{ edit %arg{1} }
 
-def ide %{
-rename-client main
-set global jumpclient main
-
-new rename-client tools
-set global toolsclient tools
-
-new rename-client docs
-set global docsclient docs
+def -docstring "This command starts and enable lsp for the session" lsp-toggle %{
+    eval %sh{kak-lsp --kakoune -s $kak_session}
+    lsp-enable
 }
 
 def -docstring "This command opens the buffer commander mode." buffer-commander %{
-	on-key %{%sh{case "$kak_key" in
-		"n") echo "bn" ;;
-		"p") echo "bp" ;;
-		"d") echo "db" ;;
-		"b") echo exec ":b<space>" ;;
-		esac
-	}}
-	info -title "Buffers" %{
+    on-key %{%sh{case "$kak_key" in
+        "n") echo "bn" ;;
+        "p") echo "bp" ;;
+        "d") echo "db" ;;
+        "b") echo exec ":b<space>" ;;
+        esac
+    }}
+    info -title "Buffers" %{
 -n next
 -p previous
 -d delete
 -d choose
-	}
+    }
 }
 
 def -docstring "This command opens the files comander mode" file-commander %{
-	on-key %{%sh{case "$kak_key" in
-		"f") echo exec ":find<space>";;
-		"c") echo edit ~/.config/kak/kakrc ;;
-		"s") echo write ;;
-		esac
-	}}
-	info -title "Files" %{
+    on-key %{%sh{case "$kak_key" in
+        "f") echo exec ":find<space>";;
+        "c") echo edit ~/.config/kak/kakrc ;;
+        "s") echo write ;;
+        esac
+    }}
+    info -title "Files" %{
 -f find
 -c kakrc
 -s save
-	}
+    }
 }
 
 def -docstring "This command opens the version control mode" vcs-commander %{
-	on-key %{%sh{case "$kak_key" in
-		"a") echo exec ":git<space>add<ret>";;
-		"c") echo exec ":git<space>commit<ret>";;
-		"f") echo exec ":git-edit<space>";;
-		"p") echo exec ":git<space>push<ret>" ;;
-		"P") echo exec ":git<space>pull<ret>" ;;
-		esac
-	}}
-	info -title "Version Control" %{
+    on-key %{%sh{case "$kak_key" in
+        "a") echo exec ":git<space>add<ret>";;
+        "c") echo exec ":git<space>commit<ret>";;
+        "f") echo exec ":git-edit<space>";;
+        "p") echo exec ":git<space>push<ret>" ;;
+        "P") echo exec ":git<space>pull<ret>" ;;
+        esac
+    }}
+    info -title "Version Control" %{
     -a add
     -c commit
     -f find
     -p push
     -P pull
-	}
+    }
 }
 
+def -docstring "This command opens LSP menu" lsp-commander %{
+    on-key %{%sh{
+        case "$kak_key" in
+            "l") echo exec ":lsp-toggle";;
+        esac
+    }}
+    info -title "Version Control" %{
+    -l toggle LSP
+    }
+}
 # Read the kak plugin
 # source "%val{config}/plugins/plug.kak/rc/plug.kak"
 
@@ -121,3 +127,4 @@ map -docstring "Yank the contents to clipboard" global user y '<a-|>xclip -sel c
 map -docstring "Manage buffers" global user b ":buffer-commander<ret>"
 map -docstring "Manage files" global user f ':file-commander<ret>'
 map -docstring "Version Control" global user g ':vcs-commander<ret>'
+map -docstring "LSP" global user l ':lsp-commander<ret>'
